@@ -15,3 +15,23 @@ canvas.height = height;
 // fill our canvas with the fillRect method taking in 4 arguments (x, y, width, height)
 c.fillRect(0, 0, width, height);
 
+/*Character Objcet*/
+// use OOP because we are going to need to have characters interact
+class Sprite {
+    // in constructor assign the passed in argument position to the sprits(this) position
+    constructor(position) {
+        this.position = position;
+    }
+    draw() {
+        c.fillStyle = "red";
+        c.fillRect(this.position.x, this.position.y, 50, 150);
+    }
+}
+
+const player1 = new Sprite({
+    x: 0,
+    y: 0,
+});
+
+player1.draw();
+console.log(player1);
