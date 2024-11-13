@@ -22,7 +22,7 @@ class Sprite {
     constructor(position) {
         // set the passed in position to the classes instance property
         this.position = position;
-        // invoke the instance method draw to make sure we don't have to call it every we create a new character. 
+        // invoke the instance method draw to make sure we don't have to call it every we create a new character.
         this.draw();
     }
     // allows us to draw the characters with the classes positions
@@ -44,3 +44,13 @@ const player2 = new Sprite({
     x: 900,
     y: 0,
 });
+
+/* AnimationLoop */
+const animate = () => {
+    // request animation frames and recursively call animate to continually "infinetly" create animation frames
+    window.requestAnimationFrame(animate);
+    // uncomment this to test if animation is working
+    // console.log("ping");
+};
+// make sure to invoke the function, defining a function will not invoke a function
+animate();
