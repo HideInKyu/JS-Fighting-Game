@@ -19,9 +19,12 @@ c.fillRect(0, 0, width, height);
 // use OOP because we are going to need to have characters interact
 class Sprite {
     // in constructor assign the passed in argument position to the sprits(this) position
-    constructor(position) {
+    // *little trick if you start to get more and more arguments you have to be conscious of what you passin and the order. To comat this just wrap the arguments in an object and your life will be alot simpler
+    constructor({ position, velocity }) {
         // set the passed in position to the classes instance property
         this.position = position;
+        //
+        this.velocity = velocity;
         // invoke the instance method draw to make sure we don't have to call it every we create a new character.
         this.draw();
     }
@@ -35,14 +38,29 @@ class Sprite {
 }
 
 // create player 1 with really any x or y position using an object
+// *because of the trick we have to refactor our sprites, its easy, just wrap the arguments in an object and then assign what is needed
 const player1 = new Sprite({
-    x: 0,
-    y: 0,
+    position: {
+        x: 0,
+        y: 0,
+    },
+    // set velocity x and y to 0, as a default our characters won't have any inharent speed/velocity and will be effected by other things later like gravity
+    velocity: {
+        x: 0,
+        y: 0,
+    },
 });
 // create player 2 with really any x or y position using an object
+// *here as well
 const player2 = new Sprite({
-    x: 900,
-    y: 0,
+    position: {
+        x: 900,
+        y: 0,
+    },
+    velocity: {
+        x: 0,
+        y: 0,
+    },
 });
 
 /* AnimationLoop */
