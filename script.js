@@ -111,12 +111,6 @@ const isTouchingGround = (player) => {
 
 const playerMovement = (player) => {
     window.addEventListener("keydown", (e) => {
-        console.log(
-            e.key,
-            Object.keys(player.keys)[0],
-            Object.keys(player.keys)[1],
-            Object.keys(player.keys)[2],
-        );
         if (e.key === Object.keys(player.keys)[0] && isTouchingGround(player)) {
             player.velocity.y = -10;
         }
