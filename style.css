@@ -1,0 +1,53 @@
+* {
+  box-sizing: border-box;
+}
+
+.container {
+  position: relative;
+  width: fit-content;
+  /* or  */
+  /* display: inline-block; */
+}
+.uiBox {
+  padding: 20px;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.p1HP {
+  position: absolute;
+  background-color: #ff0000;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.Accessory {
+  background-color: #fbff00;
+  height: 3rem;
+}
+
+.timer {
+  width: 5em;
+  height: 5em;
+  background-color: #ffffff;
+  flex-shrink: 0;
+  border-radius: 1rem;
+}
+
+.HPParent {
+  position: relative;
+  width: 100%;
+  height: 3rem;
+}
+
+.p2HP {
+  position: absolute;
+  background-color: #0000ff;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}

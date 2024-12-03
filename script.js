@@ -47,6 +47,7 @@ class Sprite {
     this.color = color;
     // Set the character to not attacking by default
     this.isAttacking = false;
+    this.health = 100;
   }
 
   // Allows us to draw the characters with the class's positions
@@ -57,13 +58,13 @@ class Sprite {
     c.fillRect(this.position.x, this.position.y, this.width, this.height);
     // Draw the attack box
     if (this.isAttacking) {
-    c.fillStyle = "green";
-    c.fillRect(
-      this.attackBox.position.x,
-      this.attackBox.position.y,
-      this.attackBox.width,
-      this.attackBox.height,
-    );
+      c.fillStyle = "green";
+      c.fillRect(
+        this.attackBox.position.x,
+        this.attackBox.position.y,
+        this.attackBox.width,
+        this.attackBox.height,
+      );
     }
   }
 
@@ -209,13 +210,13 @@ playerMovement(player1);
 playerMovement(player2);
 
 // Function to check if two players are touching (collision detection)
-const isTouching = ({ p1, p2 }) => {
+const isTouching = ({ b1, b2 }) => {
   return (
-    p1.attackBox.position.x + p1.attackBox.width >= p2.position.x &&
-    p1.attackBox.position.x <= p2.position.x + p2.width &&
-    p1.attackBox.position.y + p1.attackBox.height >= p2.position.y &&
-    p1.attackBox.position.y <= p2.position.y + p2.height &&
-    p1.isAttacking
+    b1.attackBox.position.x + b1.attackBox.width >= b2.position.x &&
+    b1.attackBox.position.x <= b2.position.x + b2.width &&
+    b1.attackBox.position.y + b1.attackBox.height >= b2.position.y &&
+    b1.attackBox.position.y <= b2.position.y + b2.height &&
+    b1.isAttacking
   );
 };
 
@@ -233,13 +234,16 @@ const animate = () => {
   player1.update();
   player2.update();
   // Check for collisions
-  if (isTouching({ p1: player1, p2: player2 }) && player1.isAttacking) {
+  if (isTouching({ b1: player1, b2: player2 }) && player1.isAttacking) {
     player1.isAttacking = false;
-    console.log("Player 1 hit Player 2!");
+    player2.health -= 20;
+    // document.querySelector(".p2HP").style.width = "20%";
+    document.querySelector(".p2HP").style.width = `${player2.health}%`;
   }
-  if (isTouching({ p1: player2, p2: player1 }) && player2.isAttacking) {
+  if (isTouching({ b1: player2, b2: player1 }) && player2.isAttacking) {
     player2.isAttacking = false;
-    console.log("Player 1 hit Player 2!");
+    player1.health -= 20;
+    document.querySelector(".p1HP").style.width = `${player2.health}%`;
   }
 };
 // Invoke the function to start the animation loop
