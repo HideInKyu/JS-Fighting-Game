@@ -211,6 +211,15 @@ playerMovement(player2);
 
 // Function to check if two players are touching (collision detection)
 const isTouching = ({ b1, b2 }) => {
+  if (
+    b1.attackBox.position.x + b1.attackBox.width >= b2.position.x &&
+    b1.attackBox.position.x <= b2.position.x + b2.width &&
+    b1.attackBox.position.y + b1.attackBox.height >= b2.position.y &&
+    b1.attackBox.position.y <= b2.position.y + b2.height &&
+    b1.isAttacking
+  ) {
+    console.log("true");
+  }
   return (
     b1.attackBox.position.x + b1.attackBox.width >= b2.position.x &&
     b1.attackBox.position.x <= b2.position.x + b2.width &&
@@ -243,7 +252,7 @@ const animate = () => {
   if (isTouching({ b1: player2, b2: player1 }) && player2.isAttacking) {
     player2.isAttacking = false;
     player1.health -= 20;
-    document.querySelector(".p1HP").style.width = `${player2.health}%`;
+    document.querySelector(".p1HP").style.width = `${player1.health}%`;
   }
 };
 // Invoke the function to start the animation loop
