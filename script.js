@@ -183,7 +183,7 @@ const playerMovement = (player) => {
         player.keys[Object.keys(player.keys)[1]] = false; // Set left movement key to false
         break;
       case Object.keys(player.keys)[2]:
-        player.keys[Object.keys(player.keys)[2]] = false; // Set right movement key to false
+        player.keys[Object.keys(player.keys)[2]] = false; // Set right movement key to false  
         break;
     }
   });
@@ -228,6 +228,28 @@ const isTouching = ({ b1, b2 }) => {
     b1.isAttacking
   );
 };
+
+let time = 2;
+
+const timer = () => {
+  if (time > 0) {
+    setTimeout(timer, 1000);
+    time--;
+    document.querySelector(".timer").textContent = time;
+  }
+  if (player1.health === player2.health) {
+    console.log("tie");
+  }
+  if (player1.health <= 0) {
+    console.log("player 2 wins");
+  }
+  if (player2.health <= 0) {
+    console.log("player 1 wins");
+    return
+  }
+};
+
+timer();
 
 /* Animation Loop */
 const animate = () => {
