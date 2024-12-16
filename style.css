@@ -36,6 +36,9 @@
   background-color: #ffffff;
   flex-shrink: 0;
   border-radius: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .P1HPParent {
