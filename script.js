@@ -4,6 +4,7 @@ const canvas = document.querySelector("canvas");
 // use get the get context method with argument 2d to allow us to draw in our canvas
 const c = canvas.getContext("2d");
 
+console.log("hello world");
 // assign width and height to have better control of screen sizes
 const width = 1024;
 const height = 524;
@@ -42,7 +43,7 @@ class Sprite {
     const centerY = this.position.y + this.height / 2;
 
     c.translate(centerX, centerY);
-    c.rotate((Math.PI / 180) * this.rotation);
+    c.rotate((Math.PI / 180) * this.angle);
 
     c.fillStyle = this.color;
     // Draw the rect so its center is now the pivot:
