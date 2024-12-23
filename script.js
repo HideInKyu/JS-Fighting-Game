@@ -20,7 +20,15 @@ c.fillRect(0, 0, width, height);
 class Sprite {
   // in constructor assign the passed in argument position to the sprits(this) position
   // *little trick if you start to get more and more arguments you have to be conscious of what you passin and the order. To combat this just wrap the arguments in an object and your life will be alot simpler
-  constructor({ position, velocity, keys, color, attackAngle, maxJump }) {
+  constructor({
+    position,
+    velocity,
+    keys,
+    color,
+    attackAngle,
+    maxJump,
+    jumpCount,
+  }) {
     // set the passed in position to the classes instance property
     this.position = position;
     // set the passed in velocity to the classes instance property
@@ -33,6 +41,7 @@ class Sprite {
     this.attackAngle = attackAngle;
     this.angle = 0;
     this.maxJump = maxJump;
+    this.jumpCount = jumpCount;
   }
   // allows us to draw the characters with the classes positions
   draw() {
@@ -84,7 +93,8 @@ const player1 = new Sprite({
   },
   color: "red",
   attackAngle: 60,
-  maxJump: 2,
+  maxJump: 1,
+  jumpCount: 0,
 });
 // create player 2 with really any x or y position using an object
 // *here as well
@@ -105,7 +115,8 @@ const player2 = new Sprite({
   },
   color: "blue",
   attackAngle: 50,
-  maxJump: 3,
+  maxJump: 2,
+  jumpCount: 0,
 });
 
 const isTouchingGround = (player) => {
@@ -117,8 +128,12 @@ const isTouchingGround = (player) => {
 
 const playerMovement = (player) => {
   window.addEventListener("keydown", (e) => {
-    if (e.key === Object.keys(player.keys)[0] && isTouchingGround(player)) {
+    if (
+      e.key === Object.keys(player.keys)[0] &&
+      player.maxJump > player.jumpCount
+    ) {
       player.velocity.y = -10;
+      player.jumpCount++;
     }
     if (e.key === Object.keys(player.keys)[1]) {
       player.keys[Object.keys(player.keys)[1]] = true;
@@ -162,20 +177,25 @@ const updatePlayerVelocity = (player) => {
 
   if (
     player.keys[Object.keys(player.keys)[3]] &&
-    player.keys[Object.keys(player.keys)[0]]
-  ) {
-    player.velocity.x = 15;
-  } else if (
-    player.keys[
-      Object.keys(player.keys)[3] && player.keys[Object.keys(player.keys)[1]]
-    ]
+    player.keys[Object.keys(player.keys)[1]] &&
+    !isTouchingGround(player)
   ) {
     player.velocity.x = -15;
+    player.angle = player.attackAngle;
+  } else if (
+    player.keys[Object.keys(player.keys)[3]] &&
+    player.keys[Object.keys(player.keys)[2]] &&
+    !isTouchingGround(player)
+  ) {
+    player.velocity.x = 15;
+    player.angle = -player.attackAngle;
   } else if (player.keys[Object.keys(player.keys)[3]]) {
     player.gravity = 0.7;
   }
-  if (!isTouchingGround(player)) {
+  if (isTouchingGround(player)) {
     player.gravity = 0.4;
+    player.angle = 0;
+    player.jumpCount = 0;
   }
 };
 
