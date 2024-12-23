@@ -1,7 +1,7 @@
-/*View port*/
-// store the canvas element from our HTML file into a const for easier select
+/* Viewport */
+// Store the canvas element from our HTML file into a constant for easier selection
 const canvas = document.querySelector("canvas");
-// use get the get context method with argument 2d to allow us to draw in our canvas
+// Use the getContext method with argument "2d" to allow us to draw in our canvas
 const c = canvas.getContext("2d");
 
 console.log("hello world");
@@ -9,11 +9,11 @@ console.log("hello world");
 const width = 1024;
 const height = 524;
 
-// assign the width and height of the canvas
+// Assign the width and height of the canvas
 canvas.width = width;
 canvas.height = height;
 
-// fill our canvas with the fillRect method taking in 4 arguments(x, y, width, height)
+// Fill our canvas with the fillRect method taking in 4 arguments (x, y, width, height)
 c.fillRect(0, 0, width, height);
 /*Character Objcet*/
 // use OOP because we are going to need to have characters interact
@@ -96,8 +96,8 @@ const player1 = new Sprite({
   maxJump: 1,
   jumpCount: 0,
 });
-// create player 2 with really any x or y position using an object
-// *here as well
+
+// Create player 2 with initial position, velocity, keys, and color
 const player2 = new Sprite({
   position: {
     x: 900,
@@ -126,6 +126,7 @@ const isTouchingGround = (player) => {
   return false;
 };
 
+// Function to handle player movement
 const playerMovement = (player) => {
   window.addEventListener("keydown", (e) => {
     if (
@@ -161,6 +162,7 @@ const playerMovement = (player) => {
   });
 };
 
+// Function to update player velocity based on key presses
 const updatePlayerVelocity = (player) => {
   if (
     player.keys[Object.keys(player.keys)[1]] &&
@@ -199,10 +201,53 @@ const updatePlayerVelocity = (player) => {
   }
 };
 
+// Initialize player movement for both players
 playerMovement(player1);
 playerMovement(player2);
 
-/* AnimationLoop */
+// Function to check if two players are touching (collision detection)
+const isTouching = ({ b1, b2 }) => {
+  if (
+    b1.attackBox.position.x + b1.attackBox.width >= b2.position.x &&
+    b1.attackBox.position.x <= b2.position.x + b2.width &&
+    b1.attackBox.position.y + b1.attackBox.height >= b2.position.y &&
+    b1.attackBox.position.y <= b2.position.y + b2.height &&
+    b1.isAttacking
+  ) {
+    console.log("true");
+  }
+  return (
+    b1.attackBox.position.x + b1.attackBox.width >= b2.position.x &&
+    b1.attackBox.position.x <= b2.position.x + b2.width &&
+    b1.attackBox.position.y + b1.attackBox.height >= b2.position.y &&
+    b1.attackBox.position.y <= b2.position.y + b2.height &&
+    b1.isAttacking
+  );
+};
+
+let time = 2;
+
+const timer = () => {
+  if (time > 0) {
+    setTimeout(timer, 1000);
+    time--;
+    document.querySelector(".timer").textContent = time;
+  }
+  if (player1.health === player2.health) {
+    console.log("tie");
+  }
+  if (player1.health <= 0) {
+    console.log("player 2 wins");
+  }
+  if (player2.health <= 0) {
+    console.log("player 1 wins");
+    return
+  }
+};
+
+timer();
+
+/* Animation Loop */
 const animate = () => {
   // request animation frames and recursively call animate to continually "infinetly" create animation frames
   window.requestAnimationFrame(animate);
